@@ -1,0 +1,21 @@
+# local.rules - Custom IDS Rules for CodeAlpha Task 4
+# Created: 24 June 2025
+# Author: Anasullah Sharief
+
+# ICMP Ping Alert
+alert icmp any any -> any any (msg:"ICMP Ping Test Alert"; sid:1000001; rev:1;)
+
+# Alert on suspicious HTTP user-agent
+alert http any any -> any any (msg:"Suspicious HTTP User-Agent Detected"; content:"User-Agent|3a| python"; http_header; sid:1000002; rev:1;)
+
+# DNS Query for suspicious domain
+alert dns any any -> any any (msg:"Suspicious DNS Request for example-bad.com"; content:"example-bad.com"; sid:1000003; rev:1;)
+
+# Port scan detection on port 23 (Telnet)
+alert tcp any any -> any 23 (msg:"Possible Telnet Scan Detected"; flags:S; sid:1000004; rev:1;)
+
+# Outbound connection to known malicious IP (dummy)
+alert ip any any -> 45.153.123.12 any (msg:"Outbound connection to known malicious IP"; sid:1000005; rev:1;)
+
+# HTTP request to fake test path
+alert http any any -> any any (msg:"Test HTTP GET to /evil-path"; content:"GET /evil-path"; http_method; sid:1000006; rev:1;)
